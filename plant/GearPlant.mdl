@@ -19,8 +19,6 @@ __MWOPC_PART_BEGIN__ /[Content_Types].xml
   <Override ContentType="application/vnd.mathworks.simulink.mf0+xml" PartName="/simulink/modelDictionary.xml"/>
   <Override ContentType="application/vnd.mathworks.simulink.ScheduleCore+xml" PartName="/simulink/ScheduleCore.xml"/>
   <Override ContentType="application/vnd.mathworks.simulink.ScheduleEditor+xml" PartName="/simulink/ScheduleEditor.xml"/>
-  <Override ContentType="application/vnd.mathworks.stateflow.chart+xml" PartName="/simulink/stateflow/chart_36.xml"/>
-  <Override ContentType="application/vnd.mathworks.stateflow.machine+xml" PartName="/simulink/stateflow/machine.xml"/>
   <Override ContentType="application/vnd.mathworks.simulink.blockDiagram+xml" PartName="/simulink/windowsInfo.xml"/>
 </Types>
 
@@ -41,11 +39,11 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <cp:category>model</cp:category>
-  <dcterms:created xsi:type="dcterms:W3CDTF">2021-10-06T21:44:46Z</dcterms:created>
+  <dcterms:created xsi:type="dcterms:W3CDTF">2021-10-08T22:07:24Z</dcterms:created>
   <dc:creator>david</dc:creator>
   <cp:lastModifiedBy>david</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2021-10-10T21:21:39Z</dcterms:modified>
-  <cp:revision>1.40</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2021-10-10T21:25:32Z</dcterms:modified>
+  <cp:revision>1.9</cp:revision>
   <cp:version>R2021b</cp:version>
 </cp:coreProperties>
 
@@ -80,7 +78,6 @@ __MWOPC_PART_BEGIN__ /simulink/_rels/blockdiagram.xml.rels
   <Relationship Id="ScheduleCore" Target="ScheduleCore.xml" Type="http://schemas.mathworks.com/simulink/2013/relationships/ScheduleCore"/>
   <Relationship Id="ScheduleEditor" Target="ScheduleEditor.xml" Type="http://schemas.mathworks.com/simulink/2013/relationships/ScheduleEditor"/>
   <Relationship Id="graphicalInterface" Target="graphicalInterface.xml" Type="http://schemas.mathworks.com/simulinkModel/2014/relationships/graphicalInterface"/>
-  <Relationship Id="stateflow_machine" Target="stateflow/machine.xml" Type="http://schemas.mathworks.com/simulinkModel/2014/relationships/stateflowMachine"/>
   <Relationship Id="system_root" Target="systems/system_root.xml" Type="http://schemas.mathworks.com/simulink/2010/relationships/system"/>
   <Relationship Id="windowsInfo" Target="windowsInfo.xml" Type="http://schemas.mathworks.com/simulinkModel/2019/relationships/windowsInfo"/>
 </Relationships>
@@ -102,10 +99,40 @@ __MWOPC_PART_BEGIN__ /simulink/bddefaults.xml
     </DialogControl>
   </MaskDefaults>
   <BlockParameterDefaults>
-    <Block BlockType="Demux">
-      <P Name="Outputs">4</P>
-      <P Name="DisplayOption">bar</P>
-      <P Name="BusSelectionMode">off</P>
+    <Block BlockType="ActionPort">
+      <P Name="InitializeStates">held</P>
+      <P Name="PropagateVarSize">Only when execution is resumed</P>
+      <P Name="DisallowConstTsAndPrmTs">off</P>
+      <P Name="ActionPortLabel">Action</P>
+    </Block>
+    <Block BlockType="Constant">
+      <P Name="Value">1</P>
+      <P Name="VectorParams1D">on</P>
+      <P Name="SamplingMode">Sample based</P>
+      <P Name="OutMin">[]</P>
+      <P Name="OutMax">[]</P>
+      <P Name="OutDataTypeStr">Inherit: Inherit from &apos;Constant value&apos;</P>
+      <P Name="LockScale">off</P>
+      <P Name="SampleTime">inf</P>
+      <P Name="FramePeriod">inf</P>
+      <P Name="PreserveConstantTs">off</P>
+    </Block>
+    <Block BlockType="DataTypeConversion">
+      <P Name="OutMin">[]</P>
+      <P Name="OutMax">[]</P>
+      <P Name="OutDataTypeStr">Inherit: Inherit via back propagation</P>
+      <P Name="LockScale">off</P>
+      <P Name="ConvertRealWorld">Real World Value (RWV)</P>
+      <P Name="RndMeth">Zero</P>
+      <P Name="SaturateOnIntegerOverflow">on</P>
+      <P Name="SampleTime">-1</P>
+    </Block>
+    <Block BlockType="If">
+      <P Name="NumInputs">1</P>
+      <P Name="IfExpression">u1 &gt; 0</P>
+      <P Name="ShowElse">on</P>
+      <P Name="ZeroCross">on</P>
+      <P Name="SampleTime">-1</P>
     </Block>
     <Block BlockType="Inport">
       <P Name="Port">1</P>
@@ -126,6 +153,12 @@ __MWOPC_PART_BEGIN__ /simulink/bddefaults.xml
       <P Name="LatchByDelayingOutsideSignal">off</P>
       <P Name="LatchInputForFeedbackSignals">off</P>
       <P Name="Interpolate">on</P>
+    </Block>
+    <Block BlockType="Merge">
+      <P Name="Inputs">2</P>
+      <P Name="InitialOutput">[]</P>
+      <P Name="AllowUnequalInputPortWidths">off</P>
+      <P Name="InputPortOffsets">[]</P>
     </Block>
     <Block BlockType="Outport">
       <P Name="Port">1</P>
@@ -152,11 +185,12 @@ __MWOPC_PART_BEGIN__ /simulink/bddefaults.xml
       <P Name="OutputWhenUnconnectedValue">0</P>
       <P Name="VectorParamsAs1DForOutWhenUnconnected">on</P>
     </Block>
-    <Block BlockType="S-Function">
-      <P Name="FunctionName">system</P>
-      <P Name="SFunctionModules">&apos;&apos;</P>
-      <P Name="PortCounts">[]</P>
-      <P Name="MultithreadedSim">auto</P>
+    <Block BlockType="RateLimiter">
+      <P Name="RisingSlewLimit">1</P>
+      <P Name="FallingSlewLimit">-1</P>
+      <P Name="SampleTimeMode">continuous</P>
+      <P Name="InitialCondition">0</P>
+      <P Name="LinearizeAsGain">on</P>
     </Block>
     <Block BlockType="SubSystem">
       <P Name="ShowPortLabels">FromPortIcon</P>
@@ -197,7 +231,6 @@ __MWOPC_PART_BEGIN__ /simulink/bddefaults.xml
       <P Name="AutoFrameSizeCalculation">off</P>
       <P Name="IsWebBlockPanel">off</P>
     </Block>
-    <Block BlockType="Terminator"/>
   </BlockParameterDefaults>
 </BlockDiagramDefaults>
 
@@ -205,7 +238,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
 <?xml version="1.0" encoding="utf-8"?>
 <ModelInformation Version="1.0">
   <Model>
-    <P Name="ModelUUID">e34d9219-41c9-4c6e-b072-81d62fa232da</P>
+    <P Name="ModelUUID">c7495461-f5f3-468c-84ff-42c86592d308</P>
     <Object PropName="HDLParams" ObjectID="1" ClassName="slprops.hdlmdlprops">
       <Array PropName="mdlProps" Type="Cell" Dimension="1*2">
         <Cell Class="char">HDLSubsystem</Cell>
@@ -216,8 +249,8 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="RTWModifiedTimeStamp">555787249</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:1.40&gt;</P>
+      <P Name="RTWModifiedTimeStamp">555787527</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:1.9&gt;</P>
     </ConfigManagerSettings>
     <SimulationSettings>
       <P Name="SimulationMode">normal</P>
@@ -262,7 +295,7 @@ __MWOPC_PART_BEGIN__ /simulink/configSet0.xml
         <P Name="StopTime">10.0</P>
         <P Name="AbsTol">auto</P>
         <P Name="AutoScaleAbsTol">on</P>
-        <P Name="FixedStep">1/10</P>
+        <P Name="FixedStep">auto</P>
         <P Name="InitialStep">auto</P>
         <P Name="MaxOrder">5</P>
         <P Name="ZcThreshold">auto</P>
@@ -277,14 +310,14 @@ __MWOPC_PART_BEGIN__ /simulink/configSet0.xml
         <P Name="EnableMultiTasking">off</P>
         <P Name="AllowMultiTaskInputOutput">off</P>
         <P Name="ConcurrentTasks">off</P>
-        <P Name="SolverName">FixedStepDiscrete</P>
+        <P Name="SolverName">VariableStepAuto</P>
         <P Name="SolverJacobianMethodControl">auto</P>
         <P Name="DaesscMode">auto</P>
         <P Name="ShapePreserveControl">DisableAll</P>
         <P Name="ZeroCrossControl">UseLocalSettings</P>
         <P Name="ZeroCrossAlgorithm">Nonadaptive</P>
         <P Name="AlgebraicLoopSolver">Auto</P>
-        <P Name="SolverInfoToggleStatus">on</P>
+        <P Name="SolverInfoToggleStatus">off</P>
         <P Name="IsAutoAppliedInSIP">off</P>
         <P Name="SolverResetMethod">Fast</P>
         <P Name="PositivePriorityOrder">off</P>
@@ -976,7 +1009,7 @@ __MWOPC_PART_BEGIN__ /simulink/configSet0.xml
     </Array>
     <P Name="Name">Configuration</P>
     <P Name="CurrentDlgPage">Solver</P>
-    <P Name="ConfigPrmDlgPosition">[ 575, 298, 900, 710 ]</P>
+    <P Name="ConfigPrmDlgPosition">[ 0, 0, 0, 0 ]</P>
     <P Name="ExtraOptions"/>
   </Object>
 </ConfigSet>
@@ -990,7 +1023,7 @@ __MWOPC_PART_BEGIN__ /simulink/configSetInfo.xml
 __MWOPC_PART_BEGIN__ /simulink/graphicalInterface.xml
 <?xml version="1.0" encoding="utf-8"?>
 <GraphicalInterface>
-  <P Name="NumRootInports">3</P>
+  <P Name="NumRootInports">1</P>
   <Inport Name="GearCommand">
     <P Name="BusObject"/>
     <P Name="OutputFunctionCall">off</P>
@@ -998,27 +1031,12 @@ __MWOPC_PART_BEGIN__ /simulink/graphicalInterface.xml
     <P Name="UnitExpr">inherit</P>
     <P Name="DataTypeExpr">GearCommandEnum</P>
   </Inport>
-  <Inport Name="AlitudeAGL">
-    <P Name="BusObject"/>
-    <P Name="OutputFunctionCall">off</P>
-    <P Name="SampleTime">-1</P>
-    <P Name="UnitExpr">inherit</P>
-  </Inport>
-  <Inport Name="WeightOnWheelsLatched">
-    <P Name="BusObject"/>
-    <P Name="OutputFunctionCall">off</P>
-    <P Name="SampleTime">-1</P>
-    <P Name="UnitExpr">inherit</P>
-    <P Name="DataTypeExpr">boolean</P>
-    <P Name="ComplexityExpr">0</P>
-  </Inport>
   <P Name="NumRootOutports">1</P>
-  <Outport Name="cmd">
+  <Outport Name="GearPosition">
     <P Name="BusObject"/>
     <P Name="BusOutputAsStruct">off</P>
-    <P Name="SignalName">GearControllerCommand</P>
     <P Name="UnitExpr">inherit</P>
-    <P Name="DataTypeExpr">GearCommandEnum</P>
+    <P Name="DataTypeExpr">GearStateEnum</P>
   </Outport>
   <P Name="ParameterArgumentNames"/>
   <P Name="NumModelReferences">0</P>
@@ -1039,28 +1057,20 @@ __MWOPC_PART_BEGIN__ /simulink/graphicalInterface.xml
 __MWOPC_PART_BEGIN__ /simulink/modelDictionary.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <MF0 version="1.1" defaultPackage="slid" packageUris="http://schema.mathworks.com/mf0/slid/R2020b_20191110">
-  <System type="System" uuid="fb8c526a-dfc8-40a5-a0dc-a04a7cd48b0e">
-    <Interface type="Interface" uuid="5ea9ffcf-283a-4675-936e-2dceea0b7b4c"/>
+  <System type="System" uuid="304e24c4-4b96-425f-a07b-a510011aa8ee">
+    <Interface type="Interface" uuid="94984d6a-396c-4144-afff-14e6cfc6bb15"/>
   </System>
 </MF0>
 __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <sltp_graph version="1.1" packageUris="http://schema.mathworks.com/mf0/sltp_mm/R2021b_202106150630">
-  <sltp.mm.core.Context type="sltp.mm.core.Context" uuid="cdb6bbfa-7946-4eb6-b3b8-2a78726ae945">
-    <globalData type="sltp.mm.core.GlobalData" uuid="5fe6311f-e844-4f7c-a328-85837adcb1cd">
-      <dataName>portAlitudeAGL</dataName>
-      <type>RootInport</type>
-    </globalData>
-    <globalData type="sltp.mm.core.GlobalData" uuid="f7dd8cc9-eeca-45eb-8c4c-2cd01ffd2c42">
+  <sltp.mm.core.Context type="sltp.mm.core.Context" uuid="1edc171d-fea8-41c4-8557-84f87edf4479">
+    <globalData type="sltp.mm.core.GlobalData" uuid="78f049ac-873a-4230-b62d-cdc65ef792b5">
       <dataName>portGearCommand</dataName>
       <type>RootInport</type>
     </globalData>
-    <globalData type="sltp.mm.core.GlobalData" uuid="a4e56e62-6903-47c5-b0df-57c954740bde">
-      <dataName>portWeightOnWheelsLatched</dataName>
-      <type>RootInport</type>
-    </globalData>
-    <globalData type="sltp.mm.core.GlobalData" uuid="9b0d49e6-4206-41c3-9517-757422838cde">
-      <dataName>portcmd</dataName>
+    <globalData type="sltp.mm.core.GlobalData" uuid="6c81eb6b-4ffc-427c-a512-65312c1c634f">
+      <dataName>portGearPosition</dataName>
       <type>RootOutport</type>
     </globalData>
     <priorityDirection>HighNumberLast</priorityDirection>
@@ -1068,28 +1078,39 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
       <isSynchronized>true</isSynchronized>
       <panelState type="sltp.mm.core.EditorPanelState" uuid="edf6590e-e711-4558-8d24-67e4e3cfa886"/>
     </editorState>
-    <rootTask type="sltp.mm.core.Task" uuid="c2860004-3712-4663-94ad-8597b1b477b2">
-      <context type="sltp.mm.core.Context" uuid="cdb6bbfa-7946-4eb6-b3b8-2a78726ae945"/>
+    <rootTask type="sltp.mm.core.Task" uuid="209e5718-a24c-4b07-b8c9-fa3efad8c102">
+      <context type="sltp.mm.core.Context" uuid="1edc171d-fea8-41c4-8557-84f87edf4479"/>
       <explicit>false</explicit>
       <name>Default</name>
       <priority>-2147483648</priority>
-      <subgraph type="sltp.mm.core.Graph" uuid="2fe3f7b7-04fa-41be-b459-210df05c0ac2">
-        <tasks type="sltp.mm.core.Task" uuid="369afb7e-d92d-4064-bcdd-760a81e2d5cc">
-          <context type="sltp.mm.core.Context" uuid="cdb6bbfa-7946-4eb6-b3b8-2a78726ae945"/>
+      <subgraph type="sltp.mm.core.Graph" uuid="cf6b4aec-93af-4ec1-80bb-78558bd6a4d1">
+        <tasks type="sltp.mm.core.Task" uuid="baaa04e8-3d06-427c-a41f-bd48b619606f">
+          <baseTask>true</baseTask>
+          <context type="sltp.mm.core.Context" uuid="1edc171d-fea8-41c4-8557-84f87edf4479"/>
           <explicit>false</explicit>
           <id>1</id>
           <isTimed>true</isTimed>
-          <name>D1</name>
+          <name>Cont</name>
           <priority>40</priority>
-          <rates type="sltp.mm.core.Rate" uuid="cd32e03f-fd4e-4100-9ddf-2b9ccaa79a81">
-            <annotation>D1</annotation>
-            <color>-436207361</color>
+          <rates type="sltp.mm.core.Rate" uuid="eec98000-0f45-4417-9df4-340e36553a41">
+            <annotation>Cont</annotation>
+            <color>255</color>
             <hasBlocks>true</hasBlocks>
-            <identifier>ClassicPeriodicDiscrete0.10</identifier>
+            <identifier>Continuous00</identifier>
             <rateSpec type="sltp.mm.core.RateSpec">
-              <period>.1</period>
+              <period>0.0</period>
             </rateSpec>
             <sti>0</sti>
+          </rates>
+          <rates type="sltp.mm.core.Rate" uuid="cee1577f-a73b-45fb-9bd5-6bd670f36bbb">
+            <annotation>FiM</annotation>
+            <color>-2139062017</color>
+            <hasBlocks>true</hasBlocks>
+            <rateSpec type="sltp.mm.core.RateSpec">
+              <offset>1.0</offset>
+              <period>0.0</period>
+            </rateSpec>
+            <sti>1</sti>
           </rates>
         </tasks>
       </subgraph>
@@ -1100,16 +1121,16 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <sltp_editor version="1.1" packageUris="http://schema.mathworks.com/mf0/DiagramEditor/R2019a_20181107 http://schema.mathworks.com/mf0/SltpSyntax/R2021b_202101212121">
   <diagram.editor.model.Diagram type="diagram.editor.model.Diagram" uuid="826e5a15-3543-4275-a733-33a7a7f88957">
-    <entities type="diagram.editor.model.Entity" uuid="5525ae60-7d33-473e-bc7a-569cd31f3271">
+    <entities type="diagram.editor.model.Entity" uuid="8fcdc991-3a40-4f54-a6ab-768facc00a36">
       <position>0,0</position>
       <size>0,0,0,0</size>
-      <syntaxElement type="sltp.mm.syntax.Node" uuid="5ca6fea4-b32f-45c4-96c9-3595f0e1c8b7"/>
-      <title>D1</title>
-      <type>implicit-periodic</type>
-      <subDiagram type="diagram.editor.model.Diagram" uuid="6c84ccc4-5d2d-484c-89af-b22a9b7fe891">
+      <syntaxElement type="sltp.mm.syntax.Node" uuid="bb0f8c6c-5f22-4519-80ab-0aadd2a43175"/>
+      <title>Cont</title>
+      <type>base</type>
+      <subDiagram type="diagram.editor.model.Diagram" uuid="d00f8081-72d9-4b01-93a7-0f923a28d23d">
         <position>0,0</position>
-        <syntaxElement type="sltp.mm.syntax.Graph" uuid="3ece21a3-c123-4349-a98d-43902cc8cf3b"/>
-        <title>D1</title>
+        <syntaxElement type="sltp.mm.syntax.Graph" uuid="103a17d3-4c31-40b6-bb80-91442936b047"/>
+        <title>Cont</title>
         <type>graph.Graph</type>
       </subDiagram>
     </entities>
@@ -1118,37 +1139,35 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
     <type>graph.Graph</type>
   </diagram.editor.model.Diagram>
   <sltp.mm.syntax.Context type="sltp.mm.syntax.Context" uuid="3d8eb7ab-0f77-408a-8048-b4401641b6a3">
-    <globalData type="sltp.mm.syntax.GlobalData" uuid="7da6d4b2-d98f-4fb5-9087-bc54be9ab139">
-      <dataName>portAlitudeAGL</dataName>
-      <type>RootInport</type>
-    </globalData>
-    <globalData type="sltp.mm.syntax.GlobalData" uuid="63be332d-3ef4-4ed8-b14d-37425d79eaf8">
+    <globalData type="sltp.mm.syntax.GlobalData" uuid="e63f891e-cf91-4070-a099-4e4873ae4506">
       <dataName>portGearCommand</dataName>
       <type>RootInport</type>
     </globalData>
-    <globalData type="sltp.mm.syntax.GlobalData" uuid="94e173f0-d5e3-45d6-8dbd-9155e4284a5e">
-      <dataName>portWeightOnWheelsLatched</dataName>
-      <type>RootInport</type>
-    </globalData>
-    <globalData type="sltp.mm.syntax.GlobalData" uuid="57b04e7e-87c2-483a-b6d4-2f137aa44e59">
-      <dataName>portcmd</dataName>
+    <globalData type="sltp.mm.syntax.GlobalData" uuid="b6c580b4-fdc0-48fe-a9b6-24ab84a9be95">
+      <dataName>portGearPosition</dataName>
       <type>RootOutport</type>
     </globalData>
     <rootGraph type="sltp.mm.syntax.Graph" uuid="00e9a1c7-bb00-4997-8ca4-8bcf7814e3a7">
-      <children type="sltp.mm.syntax.Node" uuid="5ca6fea4-b32f-45c4-96c9-3595f0e1c8b7">
+      <children type="sltp.mm.syntax.Node" uuid="bb0f8c6c-5f22-4519-80ab-0aadd2a43175">
         <priority>40</priority>
         <rates type="sltp.mm.syntax.RateData">
-          <color>#e60000</color>
+          <color>#000000</color>
           <hasBlocks>true</hasBlocks>
-          <rate>0.1</rate>
-          <title>D1</title>
+          <rate>0</rate>
+          <title>Cont</title>
         </rates>
-        <title>D1</title>
-        <type>implicit-periodic</type>
-        <diagramElement type="diagram.editor.model.Entity" uuid="5525ae60-7d33-473e-bc7a-569cd31f3271"/>
-        <subgraph type="sltp.mm.syntax.Graph" uuid="3ece21a3-c123-4349-a98d-43902cc8cf3b">
-          <title>D1</title>
-          <diagramElement type="diagram.editor.model.Diagram" uuid="6c84ccc4-5d2d-484c-89af-b22a9b7fe891"/>
+        <rates type="sltp.mm.syntax.RateData">
+          <color>#808080</color>
+          <hasBlocks>true</hasBlocks>
+          <rate>[0, 1]</rate>
+          <title>FiM</title>
+        </rates>
+        <title>Cont</title>
+        <type>base</type>
+        <diagramElement type="diagram.editor.model.Entity" uuid="8fcdc991-3a40-4f54-a6ab-768facc00a36"/>
+        <subgraph type="sltp.mm.syntax.Graph" uuid="103a17d3-4c31-40b6-bb80-91442936b047">
+          <title>Cont</title>
+          <diagramElement type="diagram.editor.model.Diagram" uuid="d00f8081-72d9-4b01-93a7-0f923a28d23d"/>
         </subgraph>
       </children>
       <title>Default</title>
@@ -1156,437 +1175,232 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
     </rootGraph>
   </sltp.mm.syntax.Context>
 </sltp_editor>
-__MWOPC_PART_BEGIN__ /simulink/stateflow/_rels/machine.xml.rels
+__MWOPC_PART_BEGIN__ /simulink/systems/_rels/system_3.xml.rels
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="chart_36" Target="chart_36.xml" Type="http://schemas.mathworks.com/simulinkModel/2018/relationships/stateflowMachine"/>
+  <Relationship Id="system_45" Target="system_45.xml" Type="http://schemas.mathworks.com/simulink/2010/relationships/system"/>
+  <Relationship Id="system_52" Target="system_52.xml" Type="http://schemas.mathworks.com/simulink/2010/relationships/system"/>
+  <Relationship Id="system_56" Target="system_56.xml" Type="http://schemas.mathworks.com/simulink/2010/relationships/system"/>
 </Relationships>
-
-__MWOPC_PART_BEGIN__ /simulink/stateflow/chart_36.xml
-<?xml version="1.0" encoding="utf-8"?>
-<chart id="36">
-  <P Name="name">GearController</P>
-  <P Name="windowPosition">[359 83 1377 789]</P>
-  <P Name="viewLimits">[-370.544 1062.353 127.582 720.019]</P>
-  <P Name="zoomFactor">1.444</P>
-  <P Name="screen">[1 1 3200 1200 1.25]</P>
-  <P Name="viewObj">36</P>
-  <P Name="visible">1</P>
-  <subviewS/>
-  <P Name="ssIdHighWaterMark">34</P>
-  <P Name="decomposition">CLUSTER_CHART</P>
-  <P Name="chartFileNumber">3</P>
-  <P Name="allowGlobalAccessToExportedFunctions">0</P>
-  <P Name="saturateOnIntegerOverflow">1</P>
-  <P Name="userSpecifiedStateTransitionExecutionOrder">1</P>
-  <P Name="disableImplicitCasting">1</P>
-  <P Name="actionLanguage">2</P>
-  <Children>
-    <state SSID="1">
-      <P Name="labelString">EntryState
-entry:
-GearControllerCommand = GearCommandEnum.down;
-</P>
-      <P Name="position">[461.2525 176.5786 341.1873 120.4036]</P>
-      <P Name="fontSize">12</P>
-      <P Name="subviewer">36</P>
-      <P Name="type">OR_STATE</P>
-      <P Name="decomposition">CLUSTER_STATE</P>
-      <eml/>
-    </state>
-    <state SSID="11">
-      <P Name="labelString">GearControllerPostStartup
-entry:</P>
-      <P Name="position">[263.8638 389.2598 621.4919 54.7625]</P>
-      <P Name="fontSize">12</P>
-      <P Name="subviewer">36</P>
-      <P Name="type">OR_STATE</P>
-      <P Name="decomposition">CLUSTER_STATE</P>
-      <eml/>
-    </state>
-    <state SSID="14">
-      <P Name="labelString">CommandGearDown
-entry:
-GearControllerCommand = GearCommandEnum.down;</P>
-      <P Name="position">[226.4692 536.2999 316.4267 65.5786]</P>
-      <P Name="fontSize">12</P>
-      <P Name="subviewer">36</P>
-      <P Name="type">OR_STATE</P>
-      <P Name="decomposition">CLUSTER_STATE</P>
-      <eml/>
-    </state>
-    <state SSID="21">
-      <P Name="labelString">CommandGearUp
-entry:
-GearControllerCommand = GearCommandEnum.up;</P>
-      <P Name="position">[724.0521 636.4018 302.1099 70.5492]</P>
-      <P Name="fontSize">12</P>
-      <P Name="subviewer">36</P>
-      <P Name="type">OR_STATE</P>
-      <P Name="decomposition">CLUSTER_STATE</P>
-      <eml/>
-    </state>
-    <data SSID="3" name="GearCommand">
-      <P Name="scope">INPUT_DATA</P>
-      <props>
-        <P Name="initialValue">GearPosition.down</P>
-        <array>
-          <P Name="size">-1</P>
-        </array>
-        <type>
-          <P Name="method">SF_INHERITED_TYPE</P>
-          <P Name="primitive">SF_DOUBLE_TYPE</P>
-          <P Name="isSigned">1</P>
-          <P Name="wordLength">16</P>
-        </type>
-        <P Name="frame">SF_FRAME_NO</P>
-        <unit>
-          <P Name="name">inherit</P>
-        </unit>
-      </props>
-      <P Name="dataType">Inherit: Same as Simulink</P>
-    </data>
-    <data SSID="10" name="GearControllerCommand">
-      <P Name="scope">OUTPUT_DATA</P>
-      <props>
-        <array>
-          <P Name="size">-1</P>
-        </array>
-        <type>
-          <P Name="method">SF_INHERITED_TYPE</P>
-          <P Name="primitive">SF_DOUBLE_TYPE</P>
-          <P Name="isSigned">1</P>
-          <P Name="wordLength">16</P>
-        </type>
-        <P Name="frame">SF_FRAME_NO</P>
-        <unit>
-          <P Name="name">inherit</P>
-        </unit>
-      </props>
-      <P Name="dataType">Inherit: Same as Simulink</P>
-    </data>
-    <data SSID="18" name="AltitudeAGL">
-      <P Name="scope">INPUT_DATA</P>
-      <props>
-        <array>
-          <P Name="size">-1</P>
-        </array>
-        <type>
-          <P Name="method">SF_INHERITED_TYPE</P>
-          <P Name="primitive">SF_DOUBLE_TYPE</P>
-          <P Name="isSigned">1</P>
-          <P Name="wordLength">16</P>
-        </type>
-        <P Name="frame">SF_FRAME_INHERITED</P>
-        <unit>
-          <P Name="name">inherit</P>
-        </unit>
-      </props>
-      <P Name="dataType">Inherit: Same as Simulink</P>
-    </data>
-    <data SSID="26" name="WeightOnWheels">
-      <P Name="scope">INPUT_DATA</P>
-      <props>
-        <array>
-          <P Name="size">-1</P>
-        </array>
-        <type>
-          <P Name="method">SF_INHERITED_TYPE</P>
-          <P Name="primitive">SF_DOUBLE_TYPE</P>
-          <P Name="isSigned">1</P>
-          <P Name="wordLength">16</P>
-        </type>
-        <P Name="frame">SF_FRAME_INHERITED</P>
-        <unit>
-          <P Name="name">inherit</P>
-        </unit>
-      </props>
-      <P Name="dataType">Inherit: Same as Simulink</P>
-    </data>
-    <transition SSID="2">
-      <P Name="labelString"/>
-      <P Name="labelPosition">[539.157 161.579 0 0]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="intersection">[0 0 1 0 539.1569 146.5786 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">1</P>
-        <P Name="intersection">[1 0 -1 0.2283 539.1569 176.5786 0 0]</P>
-      </dst>
-      <P Name="midPoint">[539.1569 161.5786]</P>
-      <P Name="dataLimits">[536.757 541.557 146.579 176.579]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">1</P>
-    </transition>
-    <transition SSID="12">
-      <P Name="labelString">[after(5, sec)]</P>
-      <P Name="labelPosition">[641.67 329.483 72.609 16]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">1</P>
-        <P Name="intersection">[3 0 1 0.473 641.0622 296.9822 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">11</P>
-        <P Name="intersection">[1 0 -1 0.6069 641.0622 389.2598 0 0]</P>
-      </dst>
-      <P Name="midPoint">[641.0622 339.121]</P>
-      <P Name="dataLimits">[638.662 643.462 296.982 389.26]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">1</P>
-    </transition>
-    <transition SSID="15">
-      <P Name="labelString">[GearCommand == GearCommandEnum.down]</P>
-      <P Name="labelPosition">[20.345 473.644 256.578 16]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">11</P>
-        <P Name="intersection">[3 0 1 0.9714 281.6423 444.0223 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">14</P>
-        <P Name="intersection">[1 0 -1 0.1744 281.6423 536.2999 0 0]</P>
-      </dst>
-      <P Name="midPoint">[281.6423 486.1611]</P>
-      <P Name="dataLimits">[279.242 284.042 444.022 536.3]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">2</P>
-    </transition>
-    <transition SSID="33">
-      <P Name="labelString">[GearCommand == GearCommandEnum.up]</P>
-      <P Name="labelPosition">[324.876 488.274 241.25 16]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">14</P>
-        <P Name="intersection">[1 0 -1 0.2929 319.1661 536.2999 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">11</P>
-        <P Name="intersection">[3 -0 1 0.911 319.1661 444.0223 0 0]</P>
-      </dst>
-      <P Name="midPoint">[319.1661 494.1611]</P>
-      <P Name="dataLimits">[316.766 321.566 444.022 536.3]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">1</P>
-    </transition>
-    <transition SSID="17">
-      <P Name="labelString">[GearCommand == GearCommandEnum.up]</P>
-      <P Name="labelPosition">[592.366 463.959 241.25 16]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">11</P>
-        <P Name="intersection">[3 0 1 0.0771 837.455 444.0223 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">24</P>
-        <P Name="intersection">[1 0 -1 0 837.4549 562.0892 0 0]</P>
-      </dst>
-      <P Name="midPoint">[837.4549 499.0557]</P>
-      <P Name="dataLimits">[835.055 839.855 444.022 562.089]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">1</P>
-    </transition>
-    <transition SSID="34">
-      <P Name="labelString">[GearCommand == GearCommandEnum.down]</P>
-      <P Name="labelPosition">[864.886 544.212 256.578 16]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">21</P>
-        <P Name="intersection">[1 0 -1 0.4662 864.8859 636.4018 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">11</P>
-        <P Name="intersection">[3 0 1 0.0329 864.8859 444.0223 0 0]</P>
-      </dst>
-      <P Name="midPoint">[864.8859 544.212]</P>
-      <P Name="dataLimits">[862.486 867.286 444.022 636.402]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">1</P>
-    </transition>
-    <transition SSID="25">
-      <P Name="labelString"/>
-      <P Name="labelPosition">[690.675 551.089 0 0]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">24</P>
-        <P Name="intersection">[4 -1 0 0 830.4549 569.0892 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">14</P>
-        <P Name="intersection">[2 1 -0 0.5 542.8959 569.0892 0 0]</P>
-      </dst>
-      <P Name="midPoint">[690.6754 569.0892]</P>
-      <P Name="dataLimits">[542.896 830.455 566.689 571.489]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">2</P>
-    </transition>
-    <transition SSID="23">
-      <P Name="labelString">[(WeightOnWheels == false) &amp;&amp; AltitudeAGL &gt; 50.0]</P>
-      <P Name="labelPosition">[556.547 599.505 278.25 16]</P>
-      <P Name="fontSize">12</P>
-      <src>
-        <P Name="SSID">24</P>
-        <P Name="intersection">[3 0 1 0 837.4549 576.0892 0 0]</P>
-      </src>
-      <dst>
-        <P Name="SSID">21</P>
-        <P Name="intersection">[1 -0 -1 0.3754 837.4549 636.4018 0 0]</P>
-      </dst>
-      <P Name="midPoint">[837.4549 602.2455]</P>
-      <P Name="dataLimits">[835.055 839.855 576.089 636.402]</P>
-      <P Name="subviewer">36</P>
-      <P Name="drawStyle">SMART</P>
-      <slide>
-        <P Name="sticky">BOTH_STICK</P>
-      </slide>
-      <P Name="executionOrder">1</P>
-    </transition>
-    <junction SSID="24">
-      <P Name="position">[837.4549 569.0892 7]</P>
-      <P Name="subviewer">36</P>
-      <P Name="type">CONNECTIVE_JUNCTION</P>
-    </junction>
-  </Children>
-</chart>
-
-__MWOPC_PART_BEGIN__ /simulink/stateflow/machine.xml
-<?xml version="1.0" encoding="utf-8"?>
-<Stateflow>
-  <machine id="35">
-    <P Name="sfVersion">80000046</P>
-    <Children>
-      <target id="55" name="sfun">
-        <P Name="description">Default Simulink S-Function Target.</P>
-      </target>
-      <chart Ref="chart_36"/>
-    </Children>
-  </machine>
-  <instance id="54">
-    <P Name="machine">35</P>
-    <P Name="name">GearController</P>
-    <P Name="chart">36</P>
-  </instance>
-</Stateflow>
 
 __MWOPC_PART_BEGIN__ /simulink/systems/_rels/system_root.xml.rels
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="system_1" Target="system_1.xml" Type="http://schemas.mathworks.com/simulink/2010/relationships/system"/>
+  <Relationship Id="system_3" Target="system_3.xml" Type="http://schemas.mathworks.com/simulink/2010/relationships/system"/>
 </Relationships>
 
-__MWOPC_PART_BEGIN__ /simulink/systems/system_1.xml
+__MWOPC_PART_BEGIN__ /simulink/systems/system_3.xml
+<?xml version="1.0" encoding="utf-8"?>
+<System>
+  <P Name="Location">[-8, -8, 1928, 1160]</P>
+  <P Name="SystemRect">[0.000000, 0.000000, 0.000000, 0.000000]</P>
+  <P Name="Open">on</P>
+  <P Name="SetExecutionDomain">off</P>
+  <P Name="ExecutionDomainType">Deduce</P>
+  <P Name="ZoomFactor">159</P>
+  <P Name="SimulinkSubDomain">Simulink</P>
+  <Block BlockType="Inport" Name="In1" SID="4">
+    <P Name="Position">[-5, 103, 25, 117]</P>
+    <P Name="ZOrder">-1</P>
+  </Block>
+  <Block BlockType="DataTypeConversion" Name="Cast To Double" SID="44">
+    <P Name="Position">[105, 93, 180, 127]</P>
+    <P Name="ZOrder">259</P>
+    <P Name="OutDataTypeStr">double</P>
+    <P Name="RndMeth">Floor</P>
+    <P Name="SaturateOnIntegerOverflow">off</P>
+  </Block>
+  <Block BlockType="If" Name="If" SID="50">
+    <P Name="Ports">[1, 3]</P>
+    <P Name="Position">[320, 91, 420, 129]</P>
+    <P Name="ZOrder">300</P>
+    <P Name="IfExpression">u1 == 0</P>
+    <P Name="ElseIfExpressions">u1 == 1</P>
+  </Block>
+  <Block BlockType="Merge" Name="Merge" SID="51">
+    <P Name="Ports">[3, 1]</P>
+    <P Name="Position">[630, 185, 670, 225]</P>
+    <P Name="ZOrder">301</P>
+    <P Name="Inputs">3</P>
+  </Block>
+  <Block BlockType="RateLimiter" Name="Rate Limiter" SID="6">
+    <P Name="Position">[230, 95, 260, 125]</P>
+    <P Name="ZOrder">1</P>
+    <P Name="RisingSlewLimit">1/5</P>
+    <P Name="FallingSlewLimit">-1/5</P>
+  </Block>
+  <Block BlockType="SubSystem" Name="down" SID="52">
+    <P Name="Ports">[0, 1, 0, 0, 0, 0, 0, 1]</P>
+    <P Name="Position">[475, 242, 545, 278]</P>
+    <P Name="ZOrder">302</P>
+    <P Name="TreatAsAtomicUnit">on</P>
+    <P Name="RequestExecContextInheritance">off</P>
+    <P Name="ContentPreviewEnabled">on</P>
+    <System Ref="system_52"/>
+  </Block>
+  <Block BlockType="SubSystem" Name="transit" SID="56">
+    <P Name="Ports">[0, 1, 0, 0, 0, 0, 0, 1]</P>
+    <P Name="Position">[475, 312, 545, 348]</P>
+    <P Name="ZOrder">303</P>
+    <P Name="TreatAsAtomicUnit">on</P>
+    <P Name="RequestExecContextInheritance">off</P>
+    <P Name="ContentPreviewEnabled">on</P>
+    <System Ref="system_56"/>
+  </Block>
+  <Block BlockType="SubSystem" Name="up" SID="45">
+    <P Name="Ports">[0, 1, 0, 0, 0, 0, 0, 1]</P>
+    <P Name="Position">[475, 172, 545, 208]</P>
+    <P Name="ZOrder">299</P>
+    <P Name="TreatAsAtomicUnit">on</P>
+    <P Name="RequestExecContextInheritance">off</P>
+    <P Name="ContentPreviewEnabled">on</P>
+    <System Ref="system_45"/>
+  </Block>
+  <Block BlockType="Outport" Name="Out1" SID="5">
+    <P Name="Position">[745, 198, 775, 212]</P>
+    <P Name="ZOrder">-2</P>
+  </Block>
+  <Line>
+    <P Name="ZOrder">1</P>
+    <P Name="Src">4#out:1</P>
+    <P Name="Dst">44#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">3</P>
+    <P Name="Src">44#out:1</P>
+    <P Name="Dst">6#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">10</P>
+    <P Name="Src">6#out:1</P>
+    <P Name="Dst">50#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">11</P>
+    <P Name="Src">50#out:1</P>
+    <P Name="Points">[85, 0]</P>
+    <P Name="Dst">45#ifaction</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">12</P>
+    <P Name="Src">45#out:1</P>
+    <P Name="Dst">51#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">13</P>
+    <P Name="Src">51#out:1</P>
+    <P Name="Dst">5#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">14</P>
+    <P Name="Src">52#out:1</P>
+    <P Name="Points">[27, 0; 0, -55]</P>
+    <P Name="Dst">51#in:2</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">15</P>
+    <P Name="Src">50#out:2</P>
+    <P Name="Points">[23, 0; 0, 117]</P>
+    <P Name="Dst">52#ifaction</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">16</P>
+    <P Name="Src">50#out:3</P>
+    <P Name="Points">[9, 0; 0, 177]</P>
+    <P Name="Dst">56#ifaction</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">17</P>
+    <P Name="Src">56#out:1</P>
+    <P Name="Points">[45, 0; 0, -110]</P>
+    <P Name="Dst">51#in:3</P>
+  </Line>
+</System>
+
+__MWOPC_PART_BEGIN__ /simulink/systems/system_45.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
   <P Name="Location">[-8, -8, 1928, 1160]</P>
   <P Name="SystemRect">[0.000000, 0.000000, 0.000000, 0.000000]</P>
   <P Name="SetExecutionDomain">off</P>
   <P Name="ExecutionDomainType">Deduce</P>
-  <P Name="SIDHighWatermark">114</P>
   <P Name="SimulinkSubDomain">Simulink</P>
-  <Block BlockType="Inport" Name="GearCommand" SID="1::111">
-    <P Name="Position">[20, 101, 40, 119]</P>
-    <P Name="ZOrder">91</P>
+  <Block BlockType="ActionPort" Name="Action Port" SID="47">
+    <P Name="Position">[170, 15, 229, 43]</P>
+    <P Name="ZOrder">-2</P>
+    <P Name="ActionPortLabel">if(u1 == 0)</P>
   </Block>
-  <Block BlockType="Inport" Name="AltitudeAGL" SID="1::113">
-    <P Name="Position">[20, 136, 40, 154]</P>
-    <P Name="ZOrder">93</P>
-    <P Name="Port">2</P>
+  <Block BlockType="Constant" Name="Constant" SID="49">
+    <P Name="Position">[-20, 70, 100, 100]</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Value">GearStateEnum.up</P>
   </Block>
-  <Block BlockType="Inport" Name="WeightOnWheels" SID="1::114">
-    <P Name="Position">[20, 171, 40, 189]</P>
-    <P Name="ZOrder">94</P>
-    <P Name="Port">3</P>
-  </Block>
-  <Block BlockType="Demux" Name=" Demux " SID="1::106">
-    <P Name="Ports">[1, 1]</P>
-    <P Name="Position">[270, 230, 320, 270]</P>
-    <P Name="ZOrder">86</P>
-    <P Name="Outputs">1</P>
-  </Block>
-  <Block BlockType="S-Function" Name=" SFunction " SID="1::105">
-    <P Name="Tag">Stateflow S-Function 3</P>
-    <P Name="Ports">[3, 2]</P>
-    <P Name="Position">[180, 100, 230, 180]</P>
-    <P Name="ZOrder">85</P>
-    <P Name="FunctionName">sf_sfun</P>
-    <P Name="PortCounts">[3 2]</P>
-    <P Name="SFunctionDeploymentMode">off</P>
-    <P Name="EnableBusSupport">on</P>
-    <P Name="SFcnIsStateOwnerBlock">off</P>
-    <Port>
-      <P Name="PortNumber">2</P>
-      <P Name="Name">GearControllerCommand</P>
-    </Port>
-  </Block>
-  <Block BlockType="Terminator" Name=" Terminator " SID="1::107">
-    <P Name="Position">[460, 241, 480, 259]</P>
-    <P Name="ZOrder">87</P>
-  </Block>
-  <Block BlockType="Outport" Name="GearControllerCommand" SID="1::112">
-    <P Name="Position">[460, 101, 480, 119]</P>
-    <P Name="ZOrder">92</P>
+  <Block BlockType="Outport" Name="Out1" SID="48">
+    <P Name="Position">[325, 78, 355, 92]</P>
+    <P Name="ZOrder">-3</P>
   </Block>
   <Line>
-    <P Name="ZOrder">28</P>
-    <P Name="Src">1::111#out:1</P>
-    <P Name="Points">[120, 0]</P>
-    <P Name="Dst">1::105#in:1</P>
+    <P Name="ZOrder">2</P>
+    <P Name="Src">49#out:1</P>
+    <P Name="Dst">48#in:1</P>
   </Line>
+</System>
+
+__MWOPC_PART_BEGIN__ /simulink/systems/system_52.xml
+<?xml version="1.0" encoding="utf-8"?>
+<System>
+  <P Name="Location">[-8, -8, 1928, 1160]</P>
+  <P Name="SystemRect">[0.000000, 0.000000, 0.000000, 0.000000]</P>
+  <P Name="SetExecutionDomain">off</P>
+  <P Name="ExecutionDomainType">Deduce</P>
+  <P Name="SimulinkSubDomain">Simulink</P>
+  <Block BlockType="ActionPort" Name="Action Port" SID="53">
+    <P Name="Position">[170, 15, 229, 43]</P>
+    <P Name="ZOrder">-2</P>
+    <P Name="ActionPortLabel">elseif(u1 == 1)</P>
+  </Block>
+  <Block BlockType="Constant" Name="Constant" SID="54">
+    <P Name="Position">[-20, 70, 100, 100]</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Value">GearStateEnum.down</P>
+  </Block>
+  <Block BlockType="Outport" Name="Out1" SID="55">
+    <P Name="Position">[325, 78, 355, 92]</P>
+    <P Name="ZOrder">-3</P>
+  </Block>
   <Line>
-    <P Name="ZOrder">29</P>
-    <P Name="Src">1::113#out:1</P>
-    <P Name="Dst">1::105#in:2</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Src">54#out:1</P>
+    <P Name="Dst">55#in:1</P>
   </Line>
+</System>
+
+__MWOPC_PART_BEGIN__ /simulink/systems/system_56.xml
+<?xml version="1.0" encoding="utf-8"?>
+<System>
+  <P Name="Location">[-8, -8, 1928, 1160]</P>
+  <P Name="SystemRect">[0.000000, 0.000000, 0.000000, 0.000000]</P>
+  <P Name="SetExecutionDomain">off</P>
+  <P Name="ExecutionDomainType">Deduce</P>
+  <P Name="SimulinkSubDomain">Simulink</P>
+  <Block BlockType="ActionPort" Name="Action Port" SID="57">
+    <P Name="Position">[170, 15, 229, 43]</P>
+    <P Name="ZOrder">-2</P>
+    <P Name="ActionPortLabel">else</P>
+  </Block>
+  <Block BlockType="Constant" Name="Constant" SID="58">
+    <P Name="Position">[-20, 70, 100, 100]</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Value">GearStateEnum.transit</P>
+  </Block>
+  <Block BlockType="Outport" Name="Out1" SID="59">
+    <P Name="Position">[325, 78, 355, 92]</P>
+    <P Name="ZOrder">-3</P>
+  </Block>
   <Line>
-    <P Name="ZOrder">30</P>
-    <P Name="Src">1::114#out:1</P>
-    <P Name="Dst">1::105#in:3</P>
-  </Line>
-  <Line>
-    <P Name="Name">GearControllerCommand</P>
-    <P Name="ZOrder">31</P>
-    <P Name="Labels">[0, 0]</P>
-    <P Name="Src">1::105#out:2</P>
-    <P Name="Dst">1::112#in:1</P>
-  </Line>
-  <Line>
-    <P Name="ZOrder">32</P>
-    <P Name="Src">1::106#out:1</P>
-    <P Name="Dst">1::107#in:1</P>
-  </Line>
-  <Line>
-    <P Name="ZOrder">33</P>
-    <P Name="Src">1::105#out:1</P>
-    <P Name="Dst">1::106#in:1</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Src">58#out:1</P>
+    <P Name="Dst">59#in:1</P>
   </Line>
 </System>
 
@@ -1598,60 +1412,35 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <P Name="SetExecutionDomain">off</P>
   <P Name="ExecutionDomainType">Deduce</P>
   <P Name="ReportName">simulink-default.rpt</P>
-  <P Name="SIDHighWatermark">18</P>
+  <P Name="SIDHighWatermark">59</P>
   <P Name="SimulinkSubDomain">Simulink</P>
   <Block BlockType="Inport" Name="GearCommand" SID="2">
-    <P Name="Position">[110, 178, 140, 192]</P>
-    <P Name="ZOrder">177</P>
+    <P Name="Position">[-45, 193, -15, 207]</P>
+    <P Name="ZOrder">1</P>
     <P Name="OutDataTypeStr">Enum: GearCommandEnum</P>
   </Block>
-  <Block BlockType="Inport" Name="AlitudeAGL" SID="8">
-    <P Name="Position">[110, 223, 140, 237]</P>
-    <P Name="ZOrder">180</P>
-    <P Name="Port">2</P>
-  </Block>
-  <Block BlockType="Inport" Name="WeightOnWheelsLatched" SID="10">
-    <P Name="Position">[110, 268, 140, 282]</P>
-    <P Name="ZOrder">182</P>
-    <P Name="Port">3</P>
-    <P Name="OutDataTypeStr">boolean</P>
-  </Block>
-  <Block BlockType="SubSystem" Name="GearController" SID="1">
-    <P Name="Ports">[3, 1]</P>
-    <P Name="Position">[280, 162, 515, 298]</P>
+  <Block BlockType="SubSystem" Name="GearPlantModel" SID="3">
+    <P Name="Ports">[1, 1]</P>
+    <P Name="Position">[85, 152, 260, 248]</P>
     <P Name="ZOrder">2</P>
-    <P Name="ErrorFcn">Stateflow.Translate.translate</P>
-    <P Name="PermitHierarchicalResolution">ExplicitOnly</P>
-    <P Name="TreatAsAtomicUnit">on</P>
     <P Name="RequestExecContextInheritance">off</P>
-    <P Name="SFBlockType">Chart</P>
     <P Name="ContentPreviewEnabled">on</P>
-    <System Ref="system_1"/>
+    <System Ref="system_3"/>
   </Block>
-  <Block BlockType="Outport" Name="cmd" SID="3">
-    <P Name="Position">[655, 223, 685, 237]</P>
-    <P Name="ZOrder">178</P>
-    <P Name="OutDataTypeStr">Enum: GearCommandEnum</P>
+  <Block BlockType="Outport" Name="GearPosition" SID="7">
+    <P Name="Position">[390, 193, 420, 207]</P>
+    <P Name="ZOrder">3</P>
+    <P Name="OutDataTypeStr">Enum: GearStateEnum</P>
   </Block>
   <Line>
-    <P Name="ZOrder">4</P>
-    <P Name="Src">1#out:1</P>
+    <P Name="ZOrder">1</P>
+    <P Name="Src">2#out:1</P>
     <P Name="Dst">3#in:1</P>
   </Line>
   <Line>
-    <P Name="ZOrder">7</P>
-    <P Name="Src">2#out:1</P>
-    <P Name="Dst">1#in:1</P>
-  </Line>
-  <Line>
-    <P Name="ZOrder">9</P>
-    <P Name="Src">8#out:1</P>
-    <P Name="Dst">1#in:2</P>
-  </Line>
-  <Line>
-    <P Name="ZOrder">15</P>
-    <P Name="Src">10#out:1</P>
-    <P Name="Dst">1#in:3</P>
+    <P Name="ZOrder">30</P>
+    <P Name="Src">3#out:1</P>
+    <P Name="Dst">7#in:1</P>
   </Line>
 </System>
 
@@ -1661,74 +1450,52 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
   <Object PropName="BdWindowsInfo" ObjectID="1" ClassName="Simulink.BDWindowsInfo">
     <Object PropName="WindowsInfo" ObjectID="2" ClassName="Simulink.WindowInfo">
       <P Name="IsActive" Class="logical">1</P>
-      <P Name="Location" Class="double">[-8.0, -8.0, 1936.0, 1168.0]</P>
+      <P Name="Location" Class="double">[58.0, 108.0, 1348.0, 749.0]</P>
       <Object PropName="ModelBrowserInfo" ObjectID="3" ClassName="Simulink.ModelBrowserInfo">
         <P Name="Visible" Class="logical">1</P>
         <P Name="DockPosition" Class="char">Left</P>
         <P Name="Width" Class="int32">50</P>
         <P Name="Height" Class="int32">50</P>
         <P Name="Filter" Class="int32">9</P>
-        <P Name="Minimized" Class="char">On</P>
+        <P Name="Minimized" Class="char">Unset</P>
       </Object>
       <Object PropName="ExplorerBarInfo" ObjectID="4" ClassName="Simulink.ExplorerBarInfo">
         <P Name="Visible" Class="logical">1</P>
       </Object>
-      <Array PropName="EditorsInfo" Type="Simulink.EditorInfo" Dimension="1*4">
+      <Array PropName="EditorsInfo" Type="Simulink.EditorInfo" Dimension="1*3">
         <Object ObjectID="5">
           <P Name="IsActive" Class="logical">1</P>
           <P Name="IsTabbed" Class="logical">1</P>
           <P Name="ViewObjType" Class="char">SimulinkTopLevel</P>
           <P Name="LoadSaveID" Class="char">0</P>
-          <P Name="Extents" Class="double">[1820.0, 926.0]</P>
-          <P Name="ZoomFactor" Class="double">2.9020242914979759</P>
-          <P Name="Offset" Class="double">[62.67578125, 78.456194196428584]</P>
-          <P Name="SceneRectInView" Class="double">[62.67578125, 78.456194196428584, 627.1484375, 319.08761160714283]</P>
+          <P Name="Extents" Class="double">[1101.0, 507.0]</P>
+          <P Name="ZoomFactor" Class="double">2.1461341333833364</P>
+          <P Name="Offset" Class="double">[-71.648357409133268, 89.880635484622545]</P>
+          <P Name="SceneRectInView" Class="double">[-71.648357409133268, 89.880635484622545, 513.01546481826654, 236.23872903075491]</P>
         </Object>
         <Object ObjectID="6">
           <P Name="IsActive" Class="logical">0</P>
           <P Name="IsTabbed" Class="logical">0</P>
-          <P Name="ViewObjType" Class="char">StateflowChart</P>
-          <P Name="LoadSaveID" Class="char">1</P>
-          <P Name="Extents" Class="double">[1337.0, 700.0]</P>
-          <P Name="ZoomFactor" Class="double">1.193411380554527</P>
-          <P Name="Offset" Class="double">[87.621663082106579, 130.52339171597635]</P>
-          <P Name="SceneRectInView" Class="double">[87.621663082106579, 130.52339171597635, 1120.3177896449702, 586.55381656804718]</P>
+          <P Name="ViewObjType" Class="char">SimulinkSubsys</P>
+          <P Name="LoadSaveID" Class="char">3</P>
+          <P Name="Extents" Class="double">[1101.0, 507.0]</P>
+          <P Name="ZoomFactor" Class="double">1.3496855345911949</P>
+          <P Name="Offset" Class="double">[-15.372786579683179, 2.1784715750232806]</P>
+          <P Name="SceneRectInView" Class="double">[-15.372786579683179, 2.1784715750232806, 815.74557315936636, 375.64305684995344]</P>
         </Object>
         <Object ObjectID="7">
           <P Name="IsActive" Class="logical">0</P>
           <P Name="IsTabbed" Class="logical">0</P>
           <P Name="ViewObjType" Class="char">SimulinkSubsys</P>
-          <P Name="LoadSaveID" Class="char">15</P>
-          <P Name="Extents" Class="double">[1820.0, 700.0]</P>
+          <P Name="LoadSaveID" Class="char">45</P>
+          <P Name="Extents" Class="double">[1101.0, 507.0]</P>
           <P Name="ZoomFactor" Class="double">1.0</P>
-          <P Name="Offset" Class="double">[-660.0, -281.5]</P>
-          <P Name="SceneRectInView" Class="double">[-660.0, -281.5, 1820.0, 700.0]</P>
-        </Object>
-        <Object ObjectID="8">
-          <P Name="IsActive" Class="logical">0</P>
-          <P Name="IsTabbed" Class="logical">0</P>
-          <P Name="ViewObjType" Class="char">SimulinkSubsys</P>
-          <P Name="LoadSaveID" Class="char">11</P>
-          <P Name="Extents" Class="double">[1820.0, 700.0]</P>
-          <P Name="ZoomFactor" Class="double">1.0</P>
-          <P Name="Offset" Class="double">[-660.0, -281.5]</P>
-          <P Name="SceneRectInView" Class="double">[-660.0, -281.5, 1820.0, 700.0]</P>
+          <P Name="Offset" Class="double">[-335.0, -196.0]</P>
+          <P Name="SceneRectInView" Class="double">[-335.0, -196.0, 1101.0, 507.0]</P>
         </Object>
       </Array>
-      <Array PropName="DockComponentsInfo" Type="Simulink.DockComponentInfo" Dimension="1*3">
-        <Object ObjectID="9">
-          <P Name="Type" Class="char">GLUE2:DDG Component</P>
-          <P Name="ID" Class="char">SymbolManager</P>
-          <P Name="Visible" Class="logical">0</P>
-          <P Name="CreateCallback" Class="char">Stateflow.Interface.Panel.createSymbolManagerComponent</P>
-          <P Name="UserData" Class="char">0</P>
-          <P Name="Floating" Class="logical">0</P>
-          <P Name="DockPosition" Class="char">Right</P>
-          <P Name="Width" Class="int32">254</P>
-          <P Name="Height" Class="int32">959</P>
-          <P Name="Minimized" Class="char">Unset</P>
-        </Object>
-        <Object ObjectID="10">
+      <Array PropName="DockComponentsInfo" Type="Simulink.DockComponentInfo" Dimension="1*2">
+        <Object ObjectID="8">
           <P Name="Type" Class="char">Simulink:Editor:ReferencedFiles</P>
           <P Name="ID" Class="char">Referenced Files</P>
           <P Name="Visible" Class="logical">0</P>
@@ -1741,24 +1508,24 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="Height" Class="int32">480</P>
           <P Name="Minimized" Class="char">Unset</P>
         </Object>
-        <Object ObjectID="11">
+        <Object ObjectID="9">
           <P Name="Type" Class="char">GLUE2:PropertyInspector</P>
           <P Name="ID" Class="char">Property Inspector</P>
-          <P Name="Visible" Class="logical">1</P>
+          <P Name="Visible" Class="logical">0</P>
           <P Name="CreateCallback" Class="char"/>
           <P Name="UserData" Class="char"/>
           <P Name="Floating" Class="logical">0</P>
           <P Name="DockPosition" Class="char">Right</P>
           <P Name="Width" Class="int32">640</P>
           <P Name="Height" Class="int32">480</P>
-          <P Name="Minimized" Class="char">On</P>
+          <P Name="Minimized" Class="char">Unset</P>
         </Object>
       </Array>
-      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAC9AAAB+PwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAABjAP////sAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAAjAD///8AAAABAAAB3wAAA9v8AgAAAAL7AAAAQgBHAEwAVQBFADIAOgBEAEQARwAgAEMAbwBtAHAAbwBuAGUAbgB0AC8AUwB5AG0AYgBvAGwATQBhAG4AYQBnAGUAcgAAAAB5AAAD2wAAACAA////+wAAAFQARwBMAFUARQAyADoAUAByAG8AcABlAHIAdAB5AEkAbgBzAHAAZQBjAHQAbwByAC8AUAByAG8AcABlAHIAdAB5ACAASQBuAHMAcABlAGMAdABvAHIAAAAAAP////8AAAGsAP///wAAAAMAAAdCAAAA3vwBAAAAAfv/////AAAAAAD/////AAABWQD///8AAAdCAAAD2wAAAAEAAAACAAAAAQAAAAL8AAAAAwAAAAAAAAABAAAANgBjAG8AbABsAGEAcABzAGkAYgBsAGUAUABhAG4AZQBsAFQAbwBvAGwAQgBhAHIATABlAGYAdAMAAAAA/////wAAAAAAAAAAAAAAAQAAAAEAAAA4AGMAbwBsAGwAYQBwAHMAaQBiAGwAZQBQAGEAbgBlAGwAVABvAG8AbABCAGEAcgBSAGkAZwBoAHQDAAAAAP////8AAAAAAAAAAAAAAAMAAAABAAAAOgBjAG8AbABsAGEAcABzAGkAYgBsAGUAUABhAG4AZQBsAFQAbwBvAGwAQgBhAHIAQgBvAHQAdABvAG0AAAAAAP////8AAAAAAAAAAA==</P>
+      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAC9AAACOPwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQBAAAAeQAAAjgAAABjAP////sAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAAjAD///8AAAABAAAAAAAAAAD8AgAAAAH7AAAAVABHAEwAVQBFADIAOgBQAHIAbwBwAGUAcgB0AHkASQBuAHMAcABlAGMAdABvAHIALwBQAHIAbwBwAGUAcgB0AHkAIABJAG4AcwBwAGUAYwB0AG8AcgAAAAAA/////wAAAawA////AAAAAwAAAAAAAAAA/AEAAAAB+/////8AAAAAAP////8AAAFZAP///wAABHMAAAI4AAAAAQAAAAIAAAABAAAAAvwAAAAA</P>
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
-      <P Name="WindowUuid" Class="char">911a9d64-1af2-48fc-86ee-79e738216ac5</P>
+      <P Name="WindowUuid" Class="char">c1116d77-460c-428f-b0a0-c650d910b92d</P>
     </Object>
-    <P Name="BDUuid" Class="char">78cf795c-2b93-4748-8ac0-4f7f601ffa99</P>
+    <P Name="BDUuid" Class="char">6333cbe7-bd15-46f0-9008-2bf0f4e5922e</P>
   </Object>
 </WindowsInfo>
 

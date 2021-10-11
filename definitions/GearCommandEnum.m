@@ -1,4 +1,4 @@
-classdef GearPosition < Simulink.IntEnumType
+classdef GearCommandEnum < Simulink.IntEnumType
   enumeration
     up   (0)
     down (1)
