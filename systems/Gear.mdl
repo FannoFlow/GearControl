@@ -43,8 +43,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2021-10-08T21:28:18Z</dcterms:created>
   <dc:creator>david</dc:creator>
   <cp:lastModifiedBy>david</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2021-10-11T21:27:21Z</dcterms:modified>
-  <cp:revision>1.19</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2021-10-12T00:45:28Z</dcterms:modified>
+  <cp:revision>1.22</cp:revision>
   <cp:version>R2021b</cp:version>
 </cp:coreProperties>
 
@@ -183,8 +183,8 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="RTWModifiedTimeStamp">555874040</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:1.19&gt;</P>
+      <P Name="RTWModifiedTimeStamp">555885921</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:1.22&gt;</P>
     </ConfigManagerSettings>
     <SimulationSettings>
       <P Name="SimulationMode">normal</P>
@@ -992,15 +992,12 @@ __MWOPC_PART_BEGIN__ /simulink/graphicalInterface.xml
     <P Name="DataTypeExpr">GearStateEnum</P>
   </Outport>
   <P Name="ParameterArgumentNames"/>
-  <P Name="NumModelReferences">3</P>
+  <P Name="NumModelReferences">2</P>
   <ModelReference>
     <P Name="ModelRefBlockPath">$bdroot/GearController|GearControl</P>
   </ModelReference>
   <ModelReference>
     <P Name="ModelRefBlockPath">$bdroot/GearPlantModel|GearPlant</P>
-  </ModelReference>
-  <ModelReference>
-    <P Name="ModelRefBlockPath">$bdroot/Model|WeightOnWheelLatch</P>
   </ModelReference>
   <P Name="NumTestPointedSignals">0</P>
   <P Name="NumProvidedFunctions">0</P>
@@ -1012,7 +1009,7 @@ __MWOPC_PART_BEGIN__ /simulink/graphicalInterface.xml
   <P Name="IsExportFunctionModel">0</P>
   <P Name="SimulinkSubDomainType">Simulink</P>
   <P Name="NumParameterArguments">0</P>
-  <P Name="NumExternalFileReferences">4</P>
+  <P Name="NumExternalFileReferences">3</P>
   <ExternalFileReference>
     <P Name="Reference">GearControl.mdl</P>
     <P Name="Path">$bdroot/GearController</P>
@@ -1023,12 +1020,6 @@ __MWOPC_PART_BEGIN__ /simulink/graphicalInterface.xml
     <P Name="Reference">GearPlant</P>
     <P Name="Path">$bdroot/GearPlantModel</P>
     <P Name="SID">13</P>
-    <P Name="Type">MODEL_BLOCK</P>
-  </ExternalFileReference>
-  <ExternalFileReference>
-    <P Name="Reference">WeightOnWheelLatch.mdl</P>
-    <P Name="Path">$bdroot/Model</P>
-    <P Name="SID">23</P>
     <P Name="Type">MODEL_BLOCK</P>
   </ExternalFileReference>
   <ExternalFileReference>
@@ -1047,9 +1038,6 @@ __MWOPC_PART_BEGIN__ /simulink/modelDictionary.xml
     <Block type="Block" uuid="92c14f9e-0112-4969-928d-83619a7c56f4">
       <Sid>13</Sid>
     </Block>
-    <Block type="Block" uuid="4e62d46c-5bc1-4024-8e56-ef624b742bb1">
-      <Sid>23</Sid>
-    </Block>
     <Block type="Block" uuid="1f952034-f57a-4ec6-838c-1303d79f3cb2">
       <Sid>8</Sid>
     </Block>
@@ -1059,20 +1047,24 @@ __MWOPC_PART_BEGIN__ /simulink/modelDictionary.xml
 __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <sltp_graph version="1.1" packageUris="http://schema.mathworks.com/mf0/sltp_mm/R2021b_202106150630">
-  <sltp.mm.core.Context type="sltp.mm.core.Context" uuid="2eab40d0-7013-4a79-bc08-69a2ff787663">
-    <globalData type="sltp.mm.core.GlobalData" uuid="dcf80b57-1adf-40c3-9de2-c010908139a1">
+  <sltp.mm.core.Context type="sltp.mm.core.Context" uuid="1a0ef8e5-8ce1-41a6-b854-0a8a94907020">
+    <globalData type="sltp.mm.core.GlobalData" uuid="07d8929e-ea5d-4295-a38d-85ee4acf13c6">
       <dataName>portAltitudeAGL</dataName>
       <type>RootInport</type>
     </globalData>
-    <globalData type="sltp.mm.core.GlobalData" uuid="30368d94-b7cd-4c5e-ae57-fd2d7b639196">
+    <globalData type="sltp.mm.core.GlobalData" uuid="a1d89880-0a32-4c23-8b73-80469b831c27">
       <dataName>portGearCommand</dataName>
       <type>RootInport</type>
     </globalData>
-    <globalData type="sltp.mm.core.GlobalData" uuid="31c5fd89-aee9-4579-84ee-465a5a81cc44">
+    <globalData type="sltp.mm.core.GlobalData" uuid="ad253803-05b1-469d-9fe5-cbf872dee8b4">
       <dataName>portGearState</dataName>
       <type>RootOutport</type>
     </globalData>
-    <globalData type="sltp.mm.core.GlobalData" uuid="5f043721-b292-492f-bc26-432f56cf46bb">
+    <globalData type="sltp.mm.core.GlobalData" uuid="7342713d-d498-4cea-be3e-4f80b584e67e">
+      <dataName>portIndicatedAirspeed</dataName>
+      <type>RootInport</type>
+    </globalData>
+    <globalData type="sltp.mm.core.GlobalData" uuid="b8140e21-767d-419c-8521-26ccbda18356">
       <dataName>portWeightOnWheels</dataName>
       <type>RootInport</type>
     </globalData>
@@ -1081,21 +1073,21 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
       <isSynchronized>true</isSynchronized>
       <panelState type="sltp.mm.core.EditorPanelState" uuid="edf6590e-e711-4558-8d24-67e4e3cfa886"/>
     </editorState>
-    <rootTask type="sltp.mm.core.Task" uuid="27f1360c-42fd-4be3-9c37-6c28ac5387d6">
-      <context type="sltp.mm.core.Context" uuid="2eab40d0-7013-4a79-bc08-69a2ff787663"/>
+    <rootTask type="sltp.mm.core.Task" uuid="150fd069-a22a-4abe-aae9-6b0ed1f16b8c">
+      <context type="sltp.mm.core.Context" uuid="1a0ef8e5-8ce1-41a6-b854-0a8a94907020"/>
       <explicit>false</explicit>
       <name>Default</name>
       <priority>-2147483648</priority>
-      <subgraph type="sltp.mm.core.Graph" uuid="35a380c4-7396-433e-b929-518ad8e458e5">
-        <tasks type="sltp.mm.core.Task" uuid="81e9ae5d-d85e-4699-83e0-984f6c0948dc">
+      <subgraph type="sltp.mm.core.Graph" uuid="fe920411-3e95-460d-b0f2-52f0a86eddd1">
+        <tasks type="sltp.mm.core.Task" uuid="184b27c0-1426-4dc7-b4df-6e0a315125a7">
           <baseTask>true</baseTask>
-          <context type="sltp.mm.core.Context" uuid="2eab40d0-7013-4a79-bc08-69a2ff787663"/>
+          <context type="sltp.mm.core.Context" uuid="1a0ef8e5-8ce1-41a6-b854-0a8a94907020"/>
           <explicit>false</explicit>
           <id>1</id>
           <isTimed>true</isTimed>
           <name>Cont</name>
           <priority>40</priority>
-          <rates type="sltp.mm.core.Rate" uuid="33fb6cd3-f499-44f6-bc36-d3d97708de2b">
+          <rates type="sltp.mm.core.Rate" uuid="61dca150-7a37-4737-8cfe-4973fc4f9e3e">
             <annotation>Cont</annotation>
             <color>255</color>
             <hasBlocks>true</hasBlocks>
@@ -1105,7 +1097,7 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
             </rateSpec>
             <sti>0</sti>
           </rates>
-          <rates type="sltp.mm.core.Rate" uuid="f78e86ab-3164-47a1-ac50-c58c3716a82e">
+          <rates type="sltp.mm.core.Rate" uuid="bed3c93f-9c4d-4e83-8944-a0a8017b8f80">
             <annotation>FiM</annotation>
             <color>-2139062017</color>
             <hasBlocks>true</hasBlocks>
@@ -1115,7 +1107,7 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
             </rateSpec>
             <sti>1</sti>
           </rates>
-          <rates type="sltp.mm.core.Rate" uuid="f0671651-4567-4c25-9196-e708415be281">
+          <rates type="sltp.mm.core.Rate" uuid="995fed3e-9ca5-42a7-a6fc-c9e1817203f4">
             <annotation>D1</annotation>
             <color>-436207361</color>
             <hasBlocks>true</hasBlocks>
@@ -1162,6 +1154,10 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
     <globalData type="sltp.mm.syntax.GlobalData" uuid="8ba005df-b497-446d-9ed3-0a7fa1275e4e">
       <dataName>portGearState</dataName>
       <type>RootOutport</type>
+    </globalData>
+    <globalData type="sltp.mm.syntax.GlobalData" uuid="90358d60-76bb-430f-818a-9d2d98d162a4">
+      <dataName>portIndicatedAirspeed</dataName>
+      <type>RootInport</type>
     </globalData>
     <globalData type="sltp.mm.syntax.GlobalData" uuid="8a2c11c0-1891-479d-8f3c-fd311194338e">
       <dataName>portWeightOnWheels</dataName>
@@ -1217,32 +1213,30 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/machine.xml
 __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-  <P Name="Location">[58, 108, 1054, 867]</P>
+  <P Name="Location">[103, 68, 1878, 1217]</P>
   <P Name="SystemRect">[0.000000, 0.000000, 0.000000, 0.000000]</P>
-  <P Name="Open">on</P>
   <P Name="SetExecutionDomain">off</P>
   <P Name="ExecutionDomainType">Deduce</P>
-  <P Name="ZoomFactor">92</P>
   <P Name="ReportName">simulink-default.rpt</P>
-  <P Name="SIDHighWatermark">26</P>
+  <P Name="SIDHighWatermark">30</P>
   <P Name="SimulinkSubDomain">Simulink</P>
   <Block BlockType="Inport" Name="GearCommand" SID="4">
-    <P Name="Position">[75, 198, 105, 212]</P>
+    <P Name="Position">[275, 198, 305, 212]</P>
     <P Name="ZOrder">2</P>
     <P Name="OutDataTypeStr">Enum: GearCommandEnum</P>
   </Block>
   <Block BlockType="Inport" Name="AltitudeAGL" SID="6">
-    <P Name="Position">[75, 253, 105, 267]</P>
+    <P Name="Position">[275, 253, 305, 267]</P>
     <P Name="ZOrder">4</P>
     <P Name="Port">2</P>
   </Block>
   <Block BlockType="Inport" Name="WeightOnWheels" SID="14">
-    <P Name="Position">[75, 308, 105, 322]</P>
+    <P Name="Position">[275, 308, 305, 322]</P>
     <P Name="ZOrder">11</P>
     <P Name="Port">3</P>
   </Block>
   <Block BlockType="Inport" Name="IndicatedAirspeed" SID="24">
-    <P Name="Position">[75, 373, 105, 387]</P>
+    <P Name="Position">[275, 363, 305, 377]</P>
     <P Name="ZOrder">17</P>
     <P Name="Port">4</P>
     <P Name="OutDataTypeStr">double</P>
@@ -1263,7 +1257,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
       <P Name="port3">on</P>
     </List>
     <P Name="ContentPreviewEnabled">on</P>
-    <P Name="ModelReferenceVersion">1.43</P>
+    <P Name="ModelReferenceVersion">1.47</P>
     <List ListType="InputPortNames">
       <P Name="port0">GearCommand</P>
       <P Name="port1">AlitudeAGL</P>
@@ -1336,47 +1330,9 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
       <P Name="port0">off</P>
     </List>
   </Block>
-  <Block BlockType="ModelReference" Name="Model" SID="23">
-    <P Name="Ports">[1, 1]</P>
-    <P Name="Position">[160, 284, 390, 346]</P>
-    <P Name="ZOrder">16</P>
-    <P Name="ModelNameDialog">WeightOnWheelLatch.mdl</P>
-    <Array PropName="ParameterArgumentNames" Type="String" Dimension="1*0"/>
-    <Array PropName="ParameterArgumentValues" Type="String" Dimension="1*0"/>
-    <P Name="SimulationMode">Normal</P>
-    <List ListType="VisibleInports">
-      <P Name="port0">on</P>
-    </List>
-    <P Name="ContentPreviewEnabled">on</P>
-    <P Name="ModelReferenceVersion">1.2</P>
-    <List ListType="InputPortNames">
-      <P Name="port0">WeightOnWheelsRaw</P>
-    </List>
-    <List ListType="OutputPortNames">
-      <P Name="port0">WeightOnWheelsLatched</P>
-    </List>
-    <List ListType="OutputPortOutputBusAsStructs">
-      <P Name="port0">off</P>
-    </List>
-    <List ListType="OutputPortSignalNames">
-      <P Name="port0">WeightOnWheelsLatched</P>
-    </List>
-    <List ListType="InputPortLatchByCopyingInsideSignal">
-      <P Name="port0">off</P>
-    </List>
-    <List ListType="OutputPortUnitExprs">
-      <P Name="port0">inherit</P>
-    </List>
-    <List ListType="InputPortUnitExprs">
-      <P Name="port0">inherit</P>
-    </List>
-    <List ListType="InputPortLatchByDelayingOutsideSignal">
-      <P Name="port0">off</P>
-    </List>
-  </Block>
   <Block BlockType="Reference" Name="Velocity Conversion" SID="26">
     <P Name="Ports">[1, 1]</P>
-    <P Name="Position">[210, 365, 300, 395]</P>
+    <P Name="Position">[385, 355, 475, 385]</P>
     <P Name="ZOrder">19</P>
     <P Name="LibraryVersion">4.0</P>
     <P Name="SourceBlock">aerolibconvert2/Velocity Conversion</P>
@@ -1401,13 +1357,13 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">5</P>
     <P Name="Src">4#out:1</P>
-    <P Name="Points">[385, 0]</P>
+    <P Name="Points">[-5, 0]</P>
     <P Name="Dst">8#in:1</P>
   </Line>
   <Line>
     <P Name="ZOrder">7</P>
     <P Name="Src">6#out:1</P>
-    <P Name="Points">[385, 0]</P>
+    <P Name="Points">[-5, 0]</P>
     <P Name="Dst">8#in:2</P>
   </Line>
   <Line>
@@ -1421,25 +1377,21 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Dst">5#in:1</P>
   </Line>
   <Line>
-    <P Name="ZOrder">18</P>
+    <P Name="ZOrder">29</P>
     <P Name="Src">14#out:1</P>
-    <P Name="Dst">23#in:1</P>
-  </Line>
-  <Line>
-    <P Name="ZOrder">19</P>
-    <P Name="Src">23#out:1</P>
-    <P Name="Points">[100, 0]</P>
+    <P Name="Points">[-5, 0]</P>
     <P Name="Dst">8#in:3</P>
   </Line>
   <Line>
     <P Name="ZOrder">22</P>
     <P Name="Src">24#out:1</P>
+    <P Name="Points">[-5, 0]</P>
     <P Name="Dst">26#in:1</P>
   </Line>
   <Line>
     <P Name="ZOrder">23</P>
     <P Name="Src">26#out:1</P>
-    <P Name="Points">[110, 0; 0, -10]</P>
+    <P Name="Points">[-5, 0]</P>
     <P Name="Dst">8#in:4</P>
   </Line>
 </System>
@@ -1547,7 +1499,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
       <P Name="WindowUuid" Class="char">911a9d64-1af2-48fc-86ee-79e738216ac5</P>
     </Object>
-    <P Name="BDUuid" Class="char">db59bec0-cf7e-46e1-835e-f0bd4592252b</P>
+    <P Name="BDUuid" Class="char">98bdc9af-bb6a-4a21-901e-3443f97b0961</P>
   </Object>
 </WindowsInfo>
 
